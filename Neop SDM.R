@@ -206,12 +206,13 @@ summary(fit_glm)
 pred <- c("bio1","bio12")
 
 
+# can't obtain the axis titles on the 2 plots #
 par(mfrow=c(1,2))
 for (i in 1:2) {
   xz <- data.frame(sapply(colMeans(SDM.data[,pred], na.rm=T),rep,each=50))
   xz[,pred[i]] <-seq(min(SDM.data[,pred[i]],na.rm=T),max(SDM.data[,pred[i]],na.rm=T),length=50)
   xz$z <- predict(fit_glm, newdata=xz, type='response')
-  plot(xz[,i],xz$z,type='l', ylim=c(0,1), cex.lab=1.5, xlab=pred[i], ylab='Occurrence probability')}
+  plot(xz[,i],xz$z,type='l', ylim=c(0,1), cex.lab=1.5, xlab=pred[i], ylab='Occurrence probability')} 
 
 
 
