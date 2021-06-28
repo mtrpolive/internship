@@ -168,7 +168,7 @@ plot( worldclim.pt)
 plot( worldclim.pt[[1]])
 
 
-worldclim.pt <- projectRaster(worldclim.pt, crs(rast))
+# worldclim.pt <- projectRaster(worldclim.pt, crs(rast))
 worldclim.pt <- resample(worldclim.pt, rast)
 plot(worldclim.pt[[1]])
 points(PAPoints$lon, PAPoints$lat, col= PAPoints$Y)
@@ -180,7 +180,7 @@ plot(wrld_simpl, add=T)
 # Extracting values of predictors #
  
 bio1.pts <- extract(worldclim.pt[[1]], PAPoints.sp)
-worldclim.pts <- extract(worldclim.uk, PAPoints.sp)
+worldclim.pts <- extract(worldclim.pt, PAPoints.sp)
 
 
 pairs(worldclim.pts[,1:5], cex=0.1) # check correlations between bioclimatic variables #
@@ -207,12 +207,14 @@ pred <- c("bio1","bio12")
 
 
 # can't obtain the axis titles on the 2 plots #
-par(mfrow=c(1,2))
+par(mfrow=c(1,2), mar=c(5,5,5,5))
 for (i in 1:2) {
   xz <- data.frame(sapply(colMeans(SDM.data[,pred], na.rm=T),rep,each=50))
-  xz[,pred[i]] <-seq(min(SDM.data[,pred[i]],na.rm=T),max(SDM.data[,pred[i]],na.rm=T),length=50)
+  xz[,pred[i]] <- seq(min(SDM.data[,pred[i]],na.rm=T), max(SDM.data[,pred[i]],na.rm=T),length=50)
   xz$z <- predict(fit_glm, newdata=xz, type='response')
-  plot(xz[,i],xz$z,type='l', ylim=c(0,1), cex.lab=1.5, xlab=pred[i], ylab='Occurrence probability')} 
+  plot(xz[,i],xz$z,type='l', ylim=c(0,1), cex.lab=1.5, xlab=pred[i], ylab='Occurrence probability')
+
+} 
 
 
 
