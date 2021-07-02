@@ -22,9 +22,10 @@ write.csv(Species$data, "SDM.Trial.csv")
 LatLongSpp <- subset(Species$data, !is.na(decimalLatitude) & !is.na(decimalLongitude))
 dim(LatLongSpp)
 
-LatLongYear <- LatLongSpp[, c("decimalLatitude", "decimalLongitude", "year")]
+LatLongYear <- LatLongSpp[, c("decimalLatitude", "decimalLongitude", "year", "identifiedBy", "institutionID", "rightsHolder")] # identification columns to try and remove grid cell centre points # 
 colnames(LatLongYear)
 dim(LatLongYear)
+View(LatLongYear)
 
 # Plot the data points #
 plot(LatLongYear$decimalLongitude, LatLongYear$decimalLatitude, pch=19, col = as.numeric(as.factor(LatLongYear$year)))
